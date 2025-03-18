@@ -1,8 +1,11 @@
-version : "3.3"
-services :
-  web :
-     build : .
-     ports :
-         - "8000:8000"
-     volumes:
-      - ./volume/store_data/db.sqlite3:/data/db.sqlite3
+FROM python:3.13-slim
+
+WORKDIR /data
+
+RUN pip install django>=4.2
+
+COPY . .
+
+RUN python manage.py migrate
+
+EXPOSE 8000
